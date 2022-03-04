@@ -1,4 +1,5 @@
-FROM php:8.0-fpm-alpine
+ARG IMAGE_PHP_VERSION=${IMAGE_PHP_VERSION}
+FROM php:${IMAGE_PHP_VERSION:-8.0}-fpm-alpine
 RUN docker-php-ext-install pdo pdo_mysql && docker-php-ext-enable pdo pdo_mysql
 ADD . /var/www/html
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"

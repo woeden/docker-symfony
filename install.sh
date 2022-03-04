@@ -2,7 +2,10 @@ if [ -e ./src ]
 then
     echo "Symfony already installed, run command : docker-compose up --build"
 else
-    symfony new temp --version=stable
+    symfony new temp --version=${SYMFONY_VERSION}
+    mv ./temp/.gitignore .
+    rm -Rf ./.git
+    mv ./temp/.git .
     mv ./temp/* .
     rm -Rf temp
     chmod -Rf 777 *

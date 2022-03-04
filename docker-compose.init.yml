@@ -5,8 +5,11 @@ services:
     build:
       context: .
       dockerfile: php.dockerfile
+      args:
+        IMAGE_PHP_VERSION: ${IMAGE_PHP_VERSION}
     volumes:
       - .:/var/www/html
     environment:
       GITHUB_USER: ${GITHUB_USER}
+      SYMFONY_VERSION: ${SYMFONY_VERSION}
     command: sh -c "chmod +rwx install.sh && ./install.sh"

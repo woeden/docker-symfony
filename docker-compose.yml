@@ -18,5 +18,7 @@ services:
     build:
       context: .
       dockerfile: php.dockerfile
+      args:
+        IMAGE_PHP_VERSION: ${IMAGE_PHP_VERSION}
     volumes:
       - .:/var/www/html
