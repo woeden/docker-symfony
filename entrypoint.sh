@@ -1,7 +1,5 @@
-if [ -e ./src ]
+if ! [ -e ./src ]
 then
-    echo "Symfony already installed, run command : docker-compose up --build"
-else
     symfony new temp --version=${SYMFONY_VERSION:-stable}
     rm ./.gitignore
     mv ./temp/.gitignore .
@@ -11,6 +9,11 @@ else
     rm -Rf temp
     chmod -Rf 777 *
     chmod -Rf +rwx *
-    composer install
-    echo "Symfony ready, run command : docker-compose up --build"
 fi
+
+if ! [ -e ./vendor ]
+then
+  composer install
+fi
+
+php-fpm
