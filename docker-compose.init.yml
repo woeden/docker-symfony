@@ -1,0 +1,12 @@
+version: '3.9'
+
+services:
+  php:
+    build:
+      context: .
+      dockerfile: php.dockerfile
+    volumes:
+      - .:/var/www/html
+    environment:
+      GITHUB_USER: ${GITHUB_USER}
+    command: sh -c "chmod +rwx install.sh && ./install.sh"
