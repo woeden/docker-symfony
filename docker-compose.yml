@@ -1,0 +1,36 @@
+services:
+  nginx:
+    depends_on:
+      - php
+    image: nginx:stable-alpine
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_SECRET}
+      MYSQL_ROOT_PASSWORD: ${DB_SECRET}
+    volumes:
+      - database:/var/lib/mysql
+    ports:
+      - 3306:3306
+  php:
+    depends_on:
+      - mysql
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: php.dockerfile
+      args:
+        IMAGE_PHP_VERSION: ${IMAGE_PHP_VERSION}
+    volumes:
+      - .:/var/www/html
+    environment:
+      SYMFONY_VERSION: ${SYMFONY_VERSION}
+
+volumes:
+  database:
